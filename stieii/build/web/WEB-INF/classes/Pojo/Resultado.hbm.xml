@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Resultado" table="resultado" catalog="stieiibd" optimistic-lock="version">
+        <id name="idResultado" type="int">
+            <column name="idResultado" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="concepto" class="Pojo.Concepto" fetch="select">
+            <column name="conceptoResul" not-null="true" />
+        </many-to-one>
+        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
+            <column name="estResultado" not-null="true" />
+        </many-to-one>
+        <property name="valor" type="double">
+            <column name="valor" precision="22" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

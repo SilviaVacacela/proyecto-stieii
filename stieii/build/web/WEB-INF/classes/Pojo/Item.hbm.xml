@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Item" table="item" catalog="stieiibd" optimistic-lock="version">
+        <id name="idItem" type="int">
+            <column name="idItem" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pregunta" class="Pojo.Pregunta" fetch="select">
+            <column name="preguntaItem" not-null="true" />
+        </many-to-one>
+        <property name="nombreItem" type="string">
+            <column name="nombreItem" length="200" not-null="true" />
+        </property>
+        <property name="imgItem" type="string">
+            <column name="imgItem" length="150" not-null="true" />
+        </property>
+        <property name="traduccion" type="string">
+            <column name="traduccion" length="200" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

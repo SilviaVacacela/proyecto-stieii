@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Concepto" table="concepto" catalog="stieiibd" optimistic-lock="version">
+        <id name="idConcepto" type="int">
+            <column name="idConcepto" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tema" class="Pojo.Tema" fetch="select">
+            <column name="tema" not-null="true" />
+        </many-to-one>
+        <property name="nombreConcepto" type="string">
+            <column name="nombreConcepto" length="100" not-null="true" />
+        </property>
+        <property name="traduccion" type="string">
+            <column name="traduccion" length="100" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="100" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="pregConcs" table="preg_conc" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="concepto" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.PregConc" />
+        </set>
+        <set name="resultados" table="resultado" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="conceptoResul" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Resultado" />
+        </set>
+    </class>
+</hibernate-mapping>

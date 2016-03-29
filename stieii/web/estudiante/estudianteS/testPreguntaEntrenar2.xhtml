@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../templates/templateEntrenarTest.xhtml">
+            <ui:define name="content">
+                <h1 style="font-size: 16px; font-weight: bold; color: #ffffff; text-shadow: 0px 0px 1px;  text-align: center;">
+                   Pregunta: Asociación de las fichas con sonidos</h1> 
+                <!--inicializamos el metodo inicializarListaFichaPrengunta-->
+                <h:outputLabel value="#{beansTestPreguntaEntren2.inicializarListaFichaPrengunta(beanSEntrenar.idPrenguntaEnt)}"/>
+
+                <h:panelGrid id="panelTestM1" columns="2" cellspacing="25px">
+                    <div style="height:500px">
+                        <h:form>
+                            <p:growl id="msgs" showDetail="true" />
+
+                            <p:dashboard id="board" model="#{beansTestPreguntaEntren2.model}" 
+                                         style=" border: 3px #036fab solid;
+                                         background-image: url('#{FacesContext.getCurrentInstance()}/stieii/faces/resources/imagen/school/fondoTest2.png');
+                                         padding: 15px; margin: 10px 35px 0px 10px; float: left;
+                                         position: absolute;
+                                         left:  20%;
+                                         right: 35%;
+                                         top: 20px;">
+                                <p:ajax event="reorder" listener="#{beansTestPreguntaEntren2.handleReorder}"/>
+
+                                <p:panel id="imagen1" header="IMAGEN" >
+                                    <p:graphicImage  id="im1" value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansTestPreguntaEntren2.obtnerficha1()}.jpg" 
+                                                     width="120px" height="100px" />
+                                </p:panel>
+
+                                <p:panel id="imagen2" header="IMAGEN" >
+                                    <p:graphicImage  value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansTestPreguntaEntren2.obtnerficha2()}.jpg" 
+                                                     width="120px" height="100px" />
+                                </p:panel>
+
+                                <p:panel id="imagen3" header="IMAGEN">
+                                    <p:graphicImage  value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansTestPreguntaEntren2.obtnerficha3()}.jpg" 
+                                                     width="120px" height="100px"/>
+                                </p:panel>
+
+                                <p:panel id="sonido1" header="SONIDO">
+                                    <p:graphicImage  value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/sonido.jpg" 
+                                                     width="120px" height="100px" onclick="hablarF1()"/>
+                                </p:panel>
+
+                                <p:panel id="sonido2" header="SONIDO">
+                                    <p:graphicImage  value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/sonido.jpg" 
+                                                     width="120px" height="100px" onclick="hablarF2()"/>
+                                </p:panel>
+
+                                <p:panel id="sonido3" header="SONIDO">
+                                    <p:graphicImage  value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/sonido.jpg" 
+                                                     width="120px" height="100px" onclick="hablarF3()"/>
+                                </p:panel>
+                            </p:dashboard>
+
+                            <input id="sonidoF1" value="#{beansTestPreguntaEntren2.obtnerSonidoficha1()}" disabled='true' type="hidden" 
+                                   style="position: absolute; right: 50px; top: 150px;"></input>
+                            <input id="sonidoF2" value="#{beansTestPreguntaEntren2.obtnerSonidoficha2()}" disabled='true' type="hidden" 
+                                   style="position: absolute; right: 50px; top: 160px;"></input>
+                            <input id="sonidoF3" value="#{beansTestPreguntaEntren2.obtnerSonidoficha3()}" disabled='true' type="hidden" 
+                                   style="position: absolute; right: 50px; top: 170px;"></input>       
+                            <p:commandButton id="btnFinTest" value="Finalizar pregunta" action="#{beansTestPreguntaEntren2.finalizarEntrenamiento()}" 
+                                             style="padding: 15px; margin: 10px 35px 0px 0px; float: right;
+                                             position: absolute;
+                                             right: 150px;
+                                             top: 150px;" update="msgs"/> 
+                            <div>
+                                <p:outputLabel value="Emparejar una imagen y un sonido, o viceversa. Se recomiendo emparejar de arriba hacia abajo"  
+                                               style="background: #ece3a5;padding: 15px; margin: 10px 55px 0px 0px; float: right;
+                                               position: absolute; right:  30px; top: 250px; width: 300px"  /> 
+
+                                <p:outputLabel   value="Para mover una imagen o sonido: debe ir al texto y con un clic sostenido, mueva al lugar que desee"
+                                                 style="background: #ece3a5;padding: 15px; margin: 10px 55px 0px 0px; float: left;
+                                                 position: absolute; right: 30px; top: 320px; width: 300px"  /> 
+                            </div>
+                        </h:form>
+
+                    </div>
+                </h:panelGrid>
+
+                <!-- FORMULARIO RESULTADO-->
+                <h:form id="frmResultado">
+                    <p:dialog widgetVar="dialogResultado" modal="true" showEffect="fade" hideEffect="explode" closable="false" style="background: thistle;">
+                        <h:panelGrid id="panelResultado" columns="1">
+                            <center>
+                                <p:outputLabel value="puntuación : #{beansTestPreguntaEntren2.resultado1}" style="font-size: 16px; font-weight: bold; color: #fff; text-shadow: 0px 0px 1px; text-transform: uppercase; text-align: center;"/>                               
+                                <p:outputLabel value="incorrectas: #{beansTestPreguntaEntren2.resultado2}" style="font-size: 16px; font-weight: bold; color: #fff; text-shadow: 0px 0px 1px; text-transform: uppercase; text-align: center;"/>
+                                <p:graphicImage value="../../resources/imagen/imgDialog/#{beansTestPreguntaEntren2.isCorrecto()}" width="170" height="150" cache="false" style="object-position: center;"/>
+                            </center>
+                        </h:panelGrid>
+                        <center>
+                            <h:commandButton  value="Aceptar" action="#{beansTestPreguntaEntren2.actualizarPagina()}" styleClass="botonstyle" />
+                        </center>
+                    </p:dialog>
+                </h:form>
+
+                <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+                <script language="javascript">
+                                                         function hablarF1() {
+                                                             var elemento = document.getElementById("sonidoF1");
+                                                             var frase = elemento.value;
+                                                             responsiveVoice.speak(frase, "US English Female");
+                                                         }
+                                                         function hablarF2() {
+                                                             var elemento = document.getElementById("sonidoF2");
+                                                             var frase = elemento.value;
+                                                             responsiveVoice.speak(frase, "US English Female");
+                                                         }
+                                                         function hablarF3() {
+                                                             var elemento = document.getElementById("sonidoF3");
+                                                             var frase = elemento.value;
+                                                             responsiveVoice.speak(frase, "US English Female");
+                                                         }
+                </script>
+
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

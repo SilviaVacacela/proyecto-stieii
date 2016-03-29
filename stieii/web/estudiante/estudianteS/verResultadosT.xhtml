@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../templates/templateEstudianteEntrenar.xhtml">
+            <ui:define name="content">
+
+                <h:form id="resultadoEnt">
+                    <p:lineChart value="#{beansVerResultadoT.modelGraphFichas}" minY="0" maxY="1800"   datatipFormat="%2$d" legendPosition="e" seriesColors="ff8e1c,e6c20a,d9674f" style="height:300px;" />
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/template.xhtml">
+
+            <ui:define name="content">
+                <center><h2>ADMINISTRACIÓN DE USUARIOS</h2></center><hr/>
+                <h:panelGrid id="panelAdministracionUsuario" columns="2" cellspacing="25px">
+                    <h:form id="frmListarUsuarios">
+                        <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                        <h:panelGroup>
+                            <center><h3>Lista de usuarios</h3></center>
+                            <p:dataTable id="tablaListaUsuarios" var="item" value="#{beanRUsuario.allUsuario}" selection="#{beanRUsuario.usuario}" selectionMode="single" rowKey="#{item.idUsuario}" paginator="true" rows="10" filteredValue="#{beanRUsuario.listaUsuarioFiltrado}" styleClass="estiloTabla">
+                                <p:ajax event="rowSelect" update=":frmDatosUsuario:panelDatosUsuario"/>
+                                <p:column headerText="USERNAME" filterBy="username">
+                                    <p:outputLabel value="#{item.username}"/>
+                                </p:column>
+                                <p:column headerText="NOMBRE" filterBy="nombre">
+                                    <p:outputLabel value="#{item.nombre}"/>
+                                </p:column>
+                                <p:column headerText="APELLIDO" filterBy="apellido">
+                                    <p:outputLabel value="#{item.apellido}"/>
+                                </p:column>
+                                <p:column headerText="CUENTA" filterBy="estado">
+                                    <p:outputLabel value="#{item.estado ? 'Activo':'Inactivo'}"/>
+                                </p:column>
+                                <p:column headerText="ROL" filterBy="rol.tipo">
+                                    <p:outputLabel value="#{item.rol.tipo}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
+                    </h:form>
+                    
+                    <h:form id="frmDatosUsuario">
+                        <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                        <h:panelGrid columns="1" id="panelDatosUsuario">
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="Nombre: " for="txtNombre"/>
+                                <p:inputText id="txtNombre" label="Nombre" value="#{beanRUsuario.usuario.nombre}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtNombre"/>
+
+                                <p:outputLabel value="Apellido: " for="txtApellido"/>
+                                <p:inputText id="txtApellido" label="Apellido" value="#{beanRUsuario.usuario.apellido}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtApellido"/>
+
+                                <h:outputText value="Fecha de nacimiento:"/>
+                                <p:calendar id="txtFechaNacimiento" title="Ejemplo:dd/MM/yyyy" showOn="button" value="#{beanRUsuario.usuario.fechaNacimiento}" pattern="dd/MM/yyyy" required="true" requiredMessage="Se requiere Fecha"/>
+                                <p:message for="txtFechaNacimiento"/>
+
+                                <h:outputText value="Género:"/>          
+                                <p:selectOneRadio id="radioCuenta" value="#{beanRUsuario.usuario.genero}">
+                                    <f:selectItem itemLabel="Masculino" itemValue="true"/>
+                                    <f:selectItem itemLabel="Femenino" itemValue="false"/>
+                                </p:selectOneRadio>
+                                <h:panelGroup></h:panelGroup>
+
+                                <p:outputLabel value="Nombre de usuario: " for="txtUsername"/>
+                                <p:inputText id="txtUsername" label="Nombre de usuario" value="#{beanRUsuario.usuario.username}" disabled="#{beanRUsuario.deshabilitarBotonCrear()}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtUsername"/>
+
+                                <p:outputLabel value="Rol de usuario:" for="menuRol"/>
+                                <p:selectOneMenu converter="rolConverter" id="menuRol" value="#{beanRUsuario.usuario.rol}" >
+
+                                    <f:selectItems id="itemsRol" value="#{beanRUsuario.listaRoles}" var="r" itemLabel="#{r.tipo}"/>
+                                    <f:converter converterId="rolConverter"/>
+                                </p:selectOneMenu>
+                                <h:panelGroup></h:panelGroup>
+
+                                <p:outputLabel value="Establecer contraseña" for="radioPass"/>
+                                <p:selectOneRadio id="radioPass" value="#{beanRUsuario.establecerPass}">
+                                    <f:selectItem itemValue="true" itemLabel="Si"></f:selectItem>
+                                    <f:selectItem itemValue="false" itemLabel="No"></f:selectItem>
+                                    <p:ajax update="txtPassword" event="valueChange" />
+                                    <p:ajax update="txtPasswordRepita" event="valueChange" />
+                                </p:selectOneRadio>
+                                <h:panelGroup></h:panelGroup>
+
+                                <p:outputLabel value="Contraseña: " for="txtPassword"/>
+                                <p:password id="txtPassword" label="Contraseña" value="#{beanRUsuario.txtPassword}" disabled="#{!beanRUsuario.establecerPass}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:password>
+                                <p:message for="txtPassword"/>
+
+                                <p:outputLabel value="Repita contraseña: " for="txtPasswordRepita"/>
+                                <p:password id="txtPasswordRepita" label="Repetir Contraseña" value="#{beanRUsuario.txtPasswordRepita}" disabled="#{!beanRUsuario.establecerPass}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:password>
+                                <h:panelGroup></h:panelGroup>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="4">
+                                <p:commandButton ajax="false" value="Crear" actionListener="#{beanRUsuario.registrar()}" styleClass="botonstyle" icon="ui-icon-circle-plus" disabled="#{beanRUsuario.deshabilitarBotonCrear()}" />
+                                <p:commandButton ajax="false" value="Actualizar" actionListener="#{beanRUsuario.actualizar()}" styleClass="botonstyle" icon="ui-icon-circle-check" disabled="#{!beanRUsuario.deshabilitarBotonCrear()}" update="tablaListaUsuarios" />
+                                <p:commandButton ajax="false" value="#{beanRUsuario.usuario.estado? 'Desactivar':'Activar'}" actionListener="#{beanRUsuario.cargarUsuarioDesactivar(beanRUsuario.usuario.idUsuario)}" styleClass="botonstyle" icon="ui-icon-trash" disabled="#{beanRUsuario.deshabilitarBotonEstado()}" update="tablaListaUsuarios"/>
+                                <p:commandButton ajax="false" icon="ui-icon-circle-arrow-w" value="Limpiar" actionListener="#{beanRUsuario.limpiarFormulario()}" styleClass="botonstyle" disabled="#{!beanRUsuario.deshabilitarBotonCrear()}">
+                                    <!--<f:setPropertyActionListener target="#{beanRUsuario.txtPassword}" value="password" />
+                                    <f:setPropertyActionListener target="#{beanRUsuario.txtPasswordRepita}" value="password" />-->
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGrid>
+
+                <!--<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                    <p:commandButton value="Si" type="button" icon="ui-icon-check"/>  
+                    <p:commandButton value="No" type="button" icon="ui-icon-close"/>       
+                </p:confirmDialog> -->
+
+                <h:form id="frmEditarUsuario">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dialog header="Datos del usuario" widgetVar="dialogEditarUsuario" modal="true">
+                        <h:panelGrid id="panelEditarUsuario" columns="3">
+                            <p:outputLabel value="Nombre: " for="txtNombre"/>
+                            <p:inputText id="txtNombre" label="Nombre" value="#{beanRUsuario.usuario.nombre}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtNombre"/>
+
+                            <p:outputLabel value="Apellido: " for="txtApellido"/>
+                            <p:inputText id="txtApellido" label="Apellido" value="#{beanRUsuario.usuario.apellido}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtApellido"/>
+
+                            <h:outputText value="Fecha de nacimiento:"/>
+                            <p:calendar id="txtFechaNacimiento" title="Ejemplo:dd/MM/yyyy" showOn="button" value="#{beanRUsuario.usuario.fechaNacimiento}" pattern="dd/MM/yyyy" required="true" requiredMessage="Se requiere Fecha"/>
+                            <p:message for="txtFechaNacimiento"/>
+
+                            <h:outputText value="Género:"/>          
+                            <p:selectOneRadio id="radioCuenta" value="#{beanRUsuario.usuario.genero}">
+                                <f:selectItem itemLabel="Masculino" itemValue="true"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="false"/>
+                            </p:selectOneRadio>
+                            <h:panelGroup></h:panelGroup>
+
+                            <p:outputLabel value="Nombre de usuario: " for="txtUsername"/>
+                            <p:inputText id="txtUsername" label="Nombre de usuario" value="#{beanRUsuario.usuario.username}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtUsername"/>
+                        </h:panelGrid>
+                        <center>
+                            <p:commandButton value="Guardar cambios" ajax="false" actionListener="#{beanRUsuario.actualizar()}" styleClass="botonstyle"/>
+                        </center>
+                    </p:dialog>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

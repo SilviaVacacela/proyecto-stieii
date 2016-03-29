@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../templates/template.xhtml">
+
+            <ui:define name="content">
+                <center><h2>ADMINISTRACIÓN DE UNIDAD</h2></center>
+                <hr/>
+                <h:panelGrid id="panelAdministracionUnidades" columns="2" cellspacing="25px">
+                    <h:form id="frmListarUnidades">
+                        <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+
+                        <h:panelGroup id="listaUnidadE">
+                            <center><h3>Lista de unidades </h3></center>
+                            <p:dataTable id="tablaListaUnidades" var="item" value="#{beanRUnidadE.allUnidadE}" selection="#{beanRUnidadE.unidadE}" selectionMode="single" rowKey="#{item.id}" paginator="true" rows="10" filteredValue="#{beanRUnidadE.listaUnidadEFiltrada}" styleClass="estiloTablaUnidad" tableStyleClass="estiloTablaClass">
+                                <p:ajax event="rowSelect" update=":frmDatosUnidades:panelDatosUnidades"/>
+                                <p:column headerText="NOMBRE UNIDAD" filterBy="nombreUnidad">
+                                    <p:outputLabel value="#{item.nombreUnidad}"/>
+                                </p:column>
+                                <p:column headerText="ADMINISTRADOR" filterBy="administrador.usuario.username">
+                                    <p:outputLabel value="#{item.administrador.usuario.username}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
+                    </h:form>
+
+
+                    <h:form id="frmDatosUnidades">
+                        <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+
+                        <h:panelGrid columns="1" id="panelDatosUnidades">
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="Nombre unidad: " for="txtNombreUnidad"/>
+                                <p:inputText id="txtNombreUnidad" label="NombreUnidad" value="#{beanRUnidadE.unidadE.nombreUnidad}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtNombreUnidad"/>
+
+                                <p:outputLabel value="Creado por: " for="txtNombreAdmin"/>
+                                <p:inputText id="txtNombreAdmin" label="Administrador" value="#{beanRUnidadE.unidadE.administrador.usuario.username}" disabled="true">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtNombreAdmin"/>
+                            </h:panelGrid>    
+                            <h:panelGrid columns="2">
+                                <h3>Temas:</h3>
+                                <p:commandButton value="Crear tema" actionListener="#{beanRTema.abrirDialogoCrearTema()}" styleClass="botonCrearNuevo" icon="ui-icon-circle-plus" disabled="#{beanRUnidadE.deshabilitarBotonCrearTema()}"/>
+                            </h:panelGrid>
+
+                            <p:dataTable id="tablaTemas" var="item" value="#{beanRTema.getTemasPorUnidad(beanRUnidadE.unidadE.id)}" selection="#{beanRTema.tema}" selectionMode="single" rowKey="#{item.idTema}" paginator="true" rows="10" >
+                                <p:ajax event="rowSelect" update=":frmEditarTema:panelEditarTema" oncomplete="dialogEditarTema.show()"/>
+                                <p:column headerText="NOMBRE">
+                                    <p:outputLabel value="#{item.nombre}"/>
+                                </p:column>
+                                <p:column headerText="VOCABULARIO">
+                                    <p:outputLabel value="#{item.vocabulario}"/>
+                                </p:column>
+                                <p:column headerText="OBJETIVO">
+                                    <p:outputLabel value="#{item.objetivo}"/>
+                                </p:column>
+                                <p:column headerText="DOMINIO">
+                                    <p:outputLabel value="#{item.dominio}"/>
+                                </p:column>
+                                <!--p:column>
+                                    <p:commandButton value="Conceptos" actionListener="#{beanRTema.abrirDialogoVerConceptos(item.idTema)}"/>
+                                </p:column-->
+
+                            </p:dataTable>
+
+                            <h:panelGrid columns="4">
+                                <p:commandButton ajax="false" value="Crear unidad" actionListener="#{beanRUnidadE.registrar()}" styleClass="botonstyle" icon="ui-icon-circle-plus" disabled="#{!beanRUnidadE.deshabilitarBotonCrearTema()}"/>
+                                <p:commandButton ajax="false" value="Actualizar" actionListener="#{beanRUnidadE.actualizar()}" styleClass="botonstyle" icon="ui-icon-circle-check" disabled="#{beanRUnidadE.deshabilitarBotonCrearTema()}"/>
+                                <h:panelGroup>
+                                    <p:commandButton value="Eliminar" title="Eliminar"  onclick="PF('cd').show()" styleClass="botonstyle" icon="ui-icon-trash" disabled="#{beanRUnidadE.deshabilitarBotonCrearTema()}"/>
+                                    <p:confirmDialog message="La unidad será eliminada, ¿Desea continuar?" header="Eliminar" severity="alert" widgetVar="cd" styleClass="confirmEliminar">
+                                        <center>
+                                            <p:commandButton ajax="false" value="Aceptar" actionListener="#{beanRUnidadE.eliminar()}" oncomplete="PF('cd').hide()"/>
+                                            <p:commandButton value="Cancelar" onclick="PF('cd').hide();" type="button" />
+                                        </center>
+                                    </p:confirmDialog>
+                                </h:panelGroup>
+                                <p:commandButton ajax="false" icon="ui-icon-circle-arrow-w" value="Limpiar" actionListener="#{beanRUnidadE.limpiarFormulario()}" styleClass="botonstyle" disabled="#{beanRUnidadE.deshabilitarBotonCrearTema()}"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGrid>
+
+
+
+                <p:dialog header="Datos del tema" widgetVar="dialogEditarTema" modal="true">
+                    <h:form id="frmEditarTema" enctype="multipart/form-data">
+                        <h:panelGrid id="panelEditarTema" columns="3">
+                            <p:outputLabel value="Nombre: "  for="txtNombreTema"/>
+                            <p:inputText id="txtNombreTema" label="Nombre" size="40" value="#{beanRTema.tema.nombre}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtNombreTema"/>
+
+                            <p:outputLabel value="Vocabulario: " for="txtVocabulario"/>
+                            <p:inputText id="txtVocabulario" label="Vocabulario:" size="40" value="#{beanRTema.tema.vocabulario}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtVocabulario"/>
+
+                            <p:outputLabel value="Objetivo: " for="txtObjetivo"/>
+                            <p:inputText id="txtObjetivo" label="Objetivo" size="40" value="#{beanRTema.tema.objetivo}">
+                            </p:inputText>
+                            <p:message for="txtObjetivo"/>
+
+                            <p:outputLabel value="Dominio: " for="txtDominio"/>
+                            <p:inputText id="txtDominio" label="Dominio:" size="40" value="#{beanRTema.tema.dominio}">
+                            </p:inputText>
+                            <p:message for="txtDominio"/>
+
+                            <p:outputLabel value="Imagen Tema: " for="uploadImagen"/>
+                            <p:fileUpload id="uploadImagen" value="#{beanRTema.imagen}" mode="simple"/>
+                            <p:message for="uploadImagen"/>
+                            <p:graphicImage value="#{FacesContext.getCurrentInstance().getExternalContext()}/resources/imagen/imgTemas/#{beanRTema.tema.imgTema}" width="60" height="60" cache="false"/>
+                            <p:outputLabel value="#{beanRTema.tema.imgTema}"/>
+
+                            <h:panelGroup></h:panelGroup>
+
+                        </h:panelGrid>
+                        <center>
+                            <p:commandButton value="Actualizar" ajax="false" actionListener="#{beanRTema.actualizar(beanRUnidadE.unidadE)}" styleClass="botonstyle" icon="ui-icon-circle-check"/>
+                            <p:commandButton ajax="false" value="Eliminar" title="Eliminar" actionListener="#{beanRTema.eliminar()}" onclick="if (!confirm('Desea eliminar el tema'))
+                                        return false;" styleClass="botonstyle" icon="ui-icon-trash"/>
+                        </center>
+                    </h:form>
+                </p:dialog>
+
+
+
+                <h:form id="frmCrearTema" enctype="multipart/form-data">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dialog header="Datos del tema" widgetVar="dialogCrearTema" modal="true">
+                        <h:panelGrid id="panelCrearTema" columns="3">
+                            <p:outputLabel value="Nombre: "  for="txtNombreTema"/>
+                            <p:inputText id="txtNombreTema" label="Nombre" size="40" value="#{beanRTema.tema.nombre}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtNombreTema"/>
+
+                            <p:outputLabel value="Vocabulario: " for="txtVocabulario"/>
+                            <p:inputText id="txtVocabulario" label="Vocabulario:" size="40" value="#{beanRTema.tema.vocabulario}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtVocabulario"/>
+
+                            <p:outputLabel value="Objetivo: " for="txtObjetivo"/>
+                            <p:inputText id="txtObjetivo" label="Objetivo" size="40" value="#{beanRTema.tema.objetivo}">
+                            </p:inputText>
+                            <p:message for="txtObjetivo"/>
+
+                            <p:outputLabel value="Dominio: " for="txtDominio"/>
+                            <p:inputText id="txtDominio" label="Dominio:" size="40" value="#{beanRTema.tema.dominio}">
+                            </p:inputText>
+                            <p:message for="txtDominio"/>
+
+                            <p:outputLabel value="Imagen Tema: " for="uploadImagen"/>
+                            <p:fileUpload id="uploadImagen" value="#{beanRTema.imagen}" mode="simple"/>
+                            <p:message for="uploadImagen"/>
+
+                            <h:panelGroup></h:panelGroup>
+
+                        </h:panelGrid>
+                        <center>
+                            <p:commandButton value="Guardar" ajax="false" actionListener="#{beanRTema.registrar(beanRUnidadE.unidadE)}" styleClass="botonstyle" icon="ui-icon-circle-plus"/>
+                        </center>
+                    </p:dialog>
+                </h:form>
+
+
+                
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

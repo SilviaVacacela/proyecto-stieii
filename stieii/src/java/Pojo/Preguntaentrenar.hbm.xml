@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Preguntaentrenar" table="preguntaentrenar" catalog="stieiibd" optimistic-lock="version">
+        <id name="idInt" type="int">
+            <column name="idInt" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="entrenamiento" class="Pojo.Entrenamiento" fetch="select">
+            <column name="identrenar" not-null="true" />
+        </many-to-one>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true" />
+        </property>
+        <property name="valor" type="int">
+            <column name="valor" not-null="true" />
+        </property>
+        <property name="incorrecto" type="int">
+            <column name="incorrecto" not-null="true" />
+        </property>
+        <set name="fichaspreguntas" table="fichaspregunta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pregunta" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Fichaspregunta" />
+        </set>
+    </class>
+</hibernate-mapping>

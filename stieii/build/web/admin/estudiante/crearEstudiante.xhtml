@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+
+        <ui:composition template="./../../templates/template.xhtml">
+
+            <ui:define name="content">
+                <center><h2>ADMINISTRACIÓN DEL ESTUDIANTE</h2></center><hr/>
+
+                <h:panelGrid id="panelAdministracionEstudiante" columns="2" cellspacing="25px" style="margin-top: 30px; position: inherit">
+                    <h:form id="frmListarEstudiante" >
+                        <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+
+                        <center><h3>Lista de Estudiantes</h3></center>
+                        <p:dataTable id="tablaEstudiantes" var="item" value="#{beanREstudiante.listaALLEstudiantes}" selection="#{beanREstudiante.estudianteSeleccionado}" selectionMode="single" rowKey="#{item.idEst}" paginator="true" rows="10" filteredValue="#{beanREstudiante.listaEstudiantesFiltrada}" styleClass="estiloTabla">
+                            <p:ajax event="rowSelect" update=":frmDatosEstudiante:panelDatosEstudiante" />
+                            <p:column headerText="NOMBRE" filterBy="usuario.nombre">
+                                <p:outputLabel value="#{item.usuario.nombre}"/>
+                            </p:column>
+                            <p:column headerText="APELLIDO" filterBy="usuario.apellido">
+                                <p:outputLabel value="#{item.usuario.apellido}"/>
+                            </p:column>
+                            <p:column headerText="UNIDAD " filterBy="unidadensenianza.nombreUnidad">
+                                <p:outputLabel value="#{item.unidadensenianza.nombreUnidad}"/>
+                            </p:column>
+                            <p:column headerText="GÉNERO">
+                                <p:outputLabel value="#{item.usuario.genero ? 'Masculino':'Femenino'}"/>
+                            </p:column>
+                            <p:column headerText="FECHA NACIMIENTO" >
+                                <p:outputLabel value="#{item.usuario.fechaNacimiento}"/>
+                            </p:column>
+
+                        </p:dataTable> 
+
+                    </h:form>
+
+
+
+                    <h:form id="frmDatosEstudiante">
+                        <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                        <h:panelGrid columns="1" id="panelDatosEstudiante">
+                            <center><h3>FORMULARIO DATOS ESTUDIANTE</h3></center>
+                            <h:panelGrid columns="3"  cellpadding="5px" title="FORMULARIO DATOS ESTUDIANTE">
+
+                                <p:outputLabel value="Nombre de usuario: " for="txtUsername1"/>
+                                <p:inputText id="txtUsername1" label="Nombre de usuario" value="#{beanREstudiante.estudianteSeleccionado.usuario.username}" disabled="true">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtUsername1"/>
+
+                                <p:outputLabel value="Nombre: " for="txtNombre1"/>
+                                <p:inputText id="txtNombre1" label="Nombre" value="#{beanREstudiante.estudianteSeleccionado.usuario.nombre}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtNombre1"/>
+
+                                <p:outputLabel value="Apellido: " for="txtApellido1"/>
+                                <p:inputText id="txtApellido1" label="Apellido" value="#{beanREstudiante.estudianteSeleccionado.usuario.apellido}">
+                                    <f:validator validatorId="validatorVacio"/>
+                                </p:inputText>
+                                <p:message for="txtApellido1"/>
+
+
+                                <p:outputLabel for="menuUnidad1" value="Unidad" />
+                                <p:selectOneMenu converter="unidadEConverter" id="menuUnidad1" value="#{beanREstudiante.estudianteSeleccionado.unidadensenianza}" style="width: 176px" >
+                                    <f:selectItems id="itemsUnidad" value="#{beanREstudiante.obtnerListaUnidades()}" var="r" itemLabel="#{r.nombreUnidad}"/>
+                                    <f:converter converterId="unidadEConverter"/>
+                                </p:selectOneMenu>
+                                <p:message for="menuUnidad1"/>
+
+                                <h:outputText value="Género:"/>          
+                                <p:selectOneRadio id="radioCuenta" value="#{beanREstudiante.estudianteSeleccionado.usuario.genero}">
+                                    <f:selectItem itemLabel="Masculino" itemValue="true"/>
+                                    <f:selectItem itemLabel="Femenino" itemValue="false"/>
+                                </p:selectOneRadio>
+                                <h:panelGroup></h:panelGroup>
+
+
+                                <h:outputText value="Fecha de nacimiento:"/>
+                                <p:calendar id="txtFechaNacimiento1" title="Ejemplo:dd/MM/yyyy" showOn="button" value="#{beanREstudiante.estudianteSeleccionado.usuario.fechaNacimiento}" pattern="dd/MM/yyyy" required="true" requiredMessage="Se requiere Fecha"/>
+                                <p:message for="txtFechaNacimiento1"/>
+
+                                <h:panelGroup></h:panelGroup>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3">
+                                <p:commandButton ajax="false" value="Actualizar" actionListener="#{beanREstudiante.actualizar()}" styleClass="botonstyle" icon="ui-icon-circle-check" disabled="#{!beanREstudiante.deshabilitarBotonModif()}" update="tablaEstudiantes" />
+                                <p:commandButton ajax="false" value="Eliminar" actionListener="#{beanREstudiante.cargarUsuarioDesactivar(beanREstudiante.estudianteSeleccionado.usuario.idUsuario)}" styleClass="botonstyle" icon="ui-icon-trash" disabled="#{!beanREstudiante.deshabilitarBotonModif()}" update="tablaEstudiantes" 
+                                                 onclick="if (!confirm('Está seguro si desea eliminar al estudiante'))return false;"/> 
+                                <p:commandButton ajax="false" icon="ui-icon-circle-arrow-w" value="Limpiar" actionListener="#{beanREstudiante.limpiarFormulario()}" styleClass="botonstyle" disabled="#{!beanREstudiante.deshabilitarBotonModif()}" update=":frmDatosEstudiante:panelDatosEstudiante" >
+
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:form>
+
+                </h:panelGrid>
+
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

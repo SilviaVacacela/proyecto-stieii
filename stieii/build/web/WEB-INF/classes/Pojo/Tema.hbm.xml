@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Tema" table="tema" catalog="stieiibd" optimistic-lock="version">
+        <id name="idTema" type="int">
+            <column name="idTema" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="unidadensenianza" class="Pojo.Unidadensenianza" fetch="select">
+            <column name="temUnidEnsen" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="40" not-null="true" />
+        </property>
+        <property name="vocabulario" type="string">
+            <column name="vocabulario" length="100" not-null="true" />
+        </property>
+        <property name="objetivo" type="string">
+            <column name="objetivo" length="100" />
+        </property>
+        <property name="dominio" type="string">
+            <column name="dominio" length="100" />
+        </property>
+        <property name="imgTema" type="string">
+            <column name="imgTema" length="150" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="fichas" table="ficha" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="temaFicha" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Ficha" />
+        </set>
+        <set name="entrenamientos" table="entrenamiento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtema" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Entrenamiento" />
+        </set>
+        <set name="conceptos" table="concepto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tema" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Concepto" />
+        </set>
+    </class>
+</hibernate-mapping>

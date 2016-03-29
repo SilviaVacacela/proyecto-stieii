@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../templates/templateEstudiante.xhtml">
+            <ui:define name="content">
+
+                <h:form id="resultados"  style=" 
+                        margin-left: 21%;
+                        margin-right: 29.6%;
+                        background: #eee;
+                        margin-top: 3%;  /*margen superior*/
+                        margin-bottom: 1%; /*margen inferior*/
+                        border: 3px #036fab solid;
+                        height: 280px;
+                        padding: 5px; 
+                        position: inherit;">
+                    <!--inicializamos el metodo inicializarListaFichaPrengunta-->
+                    <h:outputLabel value="#{beansVerResultadoEntrenar.generarResultado()}"/>
+
+                    <h:panelGrid id="panelTestM1" columns="2" cellspacing="25px">
+                        <p:graphicImage  id="im1" value="#{FacesContext.getCurrentInstance()}/resources/imagen/Calificacion/#{beansVerResultadoEntrenar.imagenResult}" />
+                        <h:panelGrid columns="1" cellspacing="5px">
+                            <p:outputLabel value="puntaje : #{beansVerResultadoEntrenar.entrenamiento.puntaje}" style="font-size: 22px; font-weight: bold; color: #000000; text-shadow: 0px 0px 1px;  text-align: center;"/>                               
+                            <p:outputLabel value="TIEMPO :#{beansVerResultadoEntrenar.entrenamiento.tiempo} (segundos)" style="font-size: 22px; font-weight: bold; color: #000000; text-shadow: 0px 0px 1px;  text-align: center;"/>
+                            <p:outputLabel value="Error : #{beansVerResultadoEntrenar.entrenamiento.error}" style="font-size: 22px; font-weight: bold; color: #000000; text-shadow: 0px 0px 1px; text-transform: uppercase; text-align: center;"/>
+                            <center>
+                                <p:commandButton  value="Finalizar" action="#{beansVerResultadoEntrenar.mostrarMsj()}" styleClass="botonstyle" />
+                            </center>
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                </h:form>
+                <!-- FORMULARIO RESULTADO-->
+                <h:form id="frmResultado">
+                    <p:dialog widgetVar="dialogResultado" modal="true" showEffect="fade" hideEffect="explode" closable="false" style="background: thistle;">
+                        <h:panelGrid id="panelResultado" columns="1">
+                            <center>
+                                <p:outputLabel value="RESULTADO DE LA RED NEURONAL:" style="font-size: 18px; font-weight: bold; color: #fff; text-shadow: 0px 0px 1px; text-transform: uppercase; text-align: center;"/>                               
+                                <p:outputLabel value="#{beansVerResultadoEntrenar.resultado}" style="font-size: 16px; font-weight: bold; color: #fff; text-shadow: 0px 0px 1px; text-transform: uppercase; text-align: center;"/>
+                                <p:graphicImage value="../../resources/imagen/CalificacionRedN/#{beansVerResultadoEntrenar.imgREDneuronal}" width="170" height="150" cache="false" style="object-position: center;"/>
+                            </center>
+                        </h:panelGrid>
+                        <center>
+                            <h:commandButton  value="Aceptar" action="#{beansVerResultadoEntrenar.actualizarPagina()}" styleClass="botonstyle" />
+                        </center>
+                    </p:dialog>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

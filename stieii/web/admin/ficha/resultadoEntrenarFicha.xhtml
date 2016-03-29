@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../templates/template.xhtml">
+
+            <ui:define name="content">
+                <center><h2>RESULTADO DE ENTRENAMIENTOS</h2></center><hr/>
+
+                <h:panelGrid id="panelListaEstResultado">
+                    <div id="estadisticaEvaluacion">
+                        <div id="listaEstResultado">
+                            <h:form id="frmListaEstResultado">
+
+                                <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+
+
+
+                                <h:panelGroup id="listaEstudianteResultado">
+
+                                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                        <p:outputLabel for="menuUnidad" value="UNIDAD" />
+                                        <p:selectOneMenu converter="unidadEConverter" id="menuUnidad" value="#{beansVResultadoEstudiante.unidadE}"  >
+                                            <f:selectItems id="itemsUnidad" value="#{beansVResultadoEstudiante.obtnerListaUnidades()}" var="r" itemLabel="#{r.nombreUnidad}"   />
+                                            <p:ajax  update="tablaEstudianteResultado"/>
+                                            <f:converter converterId="unidadEConverter"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                    <center><h3>Lista de Estudiantes</h3></center>
+
+                                    <p:dataTable id="tablaEstudianteResultado" var="item" value="#{beansVResultadoEstudiante.listaEstudiantesPorUnidad}" selection="#{beansVResultadoEstudiante.estudianteSeleccionado}" selectionMode="single" rowKey="#{item.idEst}" paginator="true" rows="10" filteredValue="#{beansVResultadoEstudiante.listaEstudiantesFiltrada}" styleClass="estiloTablaUnidad" tableStyleClass="tablaTest">
+                                        <!--p:ajax event="rowSelect" update=":frmGraficasPorEstudiante"/-->
+                                        <p:column headerText="NOMBRE" filterBy="usuario.nombre">
+                                            <p:outputLabel value="#{item.usuario.nombre}"/>
+                                        </p:column>
+                                        <p:column headerText="Apellido" filterBy="usuario.apellido">
+                                            <p:outputLabel value="#{item.usuario.apellido}"/>
+                                        </p:column>
+                                        <p:column headerText="Operación">
+                                            <p:commandButton ajax="false" value="Ver Resultados" actionListener="#{beansVResultadoEstudiante.incializarGraficoResultado(item)}" update=":frmGraficasPorEstudiante"/>
+                                        </p:column>
+                                    </p:dataTable> 
+                                </h:panelGroup>
+                            </h:form>
+                        </div>
+
+                        <div id="graficasPorEstudiante">
+                            <h:form id="frmGraficasPorEstudiante">
+                                <div id="resultadoEnt">
+                                    <center><p:outputLabel value="Resultados" style="font-size: 20px; font-family:cursive,sans-serif;"/></center>
+                                    <p:lineChart value="#{beansVResultadoEstudiante.modelGraphFichas}" minY="0" maxY="1800"   datatipFormat="%2$d" legendPosition="e" seriesColors="ff8e1c,e6c20a,d9674f" style="height:300px;" />
+
+                                    <h:panelGrid columns="2" style="border: 2px cadetblue solid; background: wheat ; margin-top: 30px; width: 400px" cellpadding="7">
+                                        <p:outputLabel value="PUNTAJE :" style="font-size:  13px; font-weight: bold; color: #000000;"/>
+                                        <p:outputLabel value="#{beansVResultadoEstudiante.entrenamiento.puntaje}" />
+                                        <p:outputLabel value="TIEMPO :" style="font-size:  13px; font-weight: bold; color: #000000;"/>
+                                        <p:outputLabel value="#{beansVResultadoEstudiante.entrenamiento.tiempo}" />
+                                        <p:outputLabel value="ERROR :" style="font-size:  13px; font-weight: bold; color: #000000;"/>
+                                        <p:outputLabel value="#{beansVResultadoEstudiante.entrenamiento.error}" />
+                                        <p:outputLabel value="RESULTADO (Red Neuronal):" style="font-size:  13px; font-weight: bold; color: #000000;"/>
+                                        <p:outputLabel value="#{beansVResultadoEstudiante.entrenamiento.resultadoredn}" />
+                                        <p:outputLabel value="SIGUIENTE NIVEL :" style="font-size:  13px; font-weight: bold; color: #000000;"/>
+                                        <p:outputLabel value="#{beansVResultadoEstudiante.entrenamiento.nivel}" />
+                                        <p:outputLabel value="" />
+                                    </h:panelGrid>
+
+                                </div>
+
+                            </h:form>
+                        </div>
+                    </div>        
+                </h:panelGrid>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

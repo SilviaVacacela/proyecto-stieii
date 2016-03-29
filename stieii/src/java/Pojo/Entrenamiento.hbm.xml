@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Entrenamiento" table="entrenamiento" catalog="stieiibd" optimistic-lock="version">
+        <id name="idEntrena" type="int">
+            <column name="idEntrena" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
+            <column name="idestudiante" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tema" class="Pojo.Tema" fetch="select">
+            <column name="idtema" not-null="true" />
+        </many-to-one>
+        <property name="error" type="int">
+            <column name="error" not-null="true" />
+        </property>
+        <property name="tiempo" type="int">
+            <column name="tiempo" not-null="true" />
+        </property>
+        <property name="puntaje" type="int">
+            <column name="puntaje" not-null="true" />
+        </property>
+        <property name="resultadoredn" type="string">
+            <column name="resultadoredn" length="50" not-null="true" />
+        </property>
+        <property name="nivel" type="string">
+            <column name="nivel" length="45" not-null="true" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true" />
+        </property>
+        <set name="preguntaentrenars" table="preguntaentrenar" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="identrenar" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Preguntaentrenar" />
+        </set>
+    </class>
+</hibernate-mapping>

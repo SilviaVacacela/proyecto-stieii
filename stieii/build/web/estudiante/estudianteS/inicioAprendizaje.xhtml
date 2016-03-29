@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../templates/templateEstudianteEntrenar.xhtml">
+
+            <ui:define name="content">
+                <center><h2>LISTA DE TEMAS DISPONIBLES</h2></center><hr/>
+                <h:form id="dockEntrenar">
+                    <p:dataGrid var="menuItem" value="#{beansREntrenamiento.temasConFichas(beanSLogin.usernameLogin)}" columns="3" rows="8"  >
+                        <p:column style="text-align: justify;">
+                            <p:panel footer="#{menuItem.nombre}" styleClass="panelStyle" style="font-size: 14px; text-shadow: 0px 0px 1.5px; font-family: cursive,sans-serif;">
+
+                                <h:commandLink id="idtemFicha" action="#{beansREntrenamiento.iniciarEntrenamiento(beanSLogin.usernameLogin, menuItem.idTema)}">
+
+                                    <p:graphicImage styleClass="imgItem" value="#{FacesContext.getCurrentInstance().getExternalContext()}/resources/imagen/imgTemas/#{menuItem.imgTema}" width="100" height="90" cache="false"/>
+                                </h:commandLink>
+                            </p:panel>
+                        </p:column>
+
+                        <h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                        </h:panelGrid>
+                        
+
+                    </p:dataGrid>
+                </h:form>
+
+
+                <!-- Mostrar mensaje si no se encuentran fichassufiente-->
+                <h:form id="frmPresentarMensaje">
+                    <p:dialog widgetVar="dialogPresentarMensaje" modal="true" showEffect="fade" hideEffect="explode" closable="true" style="background: thistle;">
+                        <h:panelGrid id="panelPresentarMensaje" columns="1">
+                            <center>
+                                <p:graphicImage value="../../resources/imagen/imgDialog/pieza.jpg" width="380" height="200" cache="false" style="object-position: center;"/>
+                            </center>
+                        </h:panelGrid>
+
+                    </p:dialog>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

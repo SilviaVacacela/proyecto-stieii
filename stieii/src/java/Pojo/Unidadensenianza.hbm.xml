@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Unidadensenianza" table="unidadensenianza" catalog="stieiibd" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="administrador" class="Pojo.Administrador" fetch="select">
+            <column name="adminUnidEnsen" not-null="true" />
+        </many-to-one>
+        <property name="nombreUnidad" type="string">
+            <column name="nombreUnidad" length="40" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="temas" table="tema" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="temUnidEnsen" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Tema" />
+        </set>
+        <set name="estudiantes" table="estudiante" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="estUnidEnsen" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Estudiante" />
+        </set>
+    </class>
+</hibernate-mapping>

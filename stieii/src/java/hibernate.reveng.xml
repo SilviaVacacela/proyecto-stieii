@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="stieiibd"/>
+  <table-filter match-name="preguntaentrenar"/>
+  <table-filter match-name="item"/>
+  <table-filter match-name="unidadensenianza"/>
+  <table-filter match-name="entrenamiento"/>
+  <table-filter match-name="estudiante"/>
+  <table-filter match-name="preg_conc"/>
+  <table-filter match-name="pregunta"/>
+  <table-filter match-name="resultado"/>
+  <table-filter match-name="administrador"/>
+  <table-filter match-name="usuario"/>
+  <table-filter match-name="fichaspregunta"/>
+  <table-filter match-name="concepto"/>
+  <table-filter match-name="tema"/>
+  <table-filter match-name="rol"/>
+  <table-filter match-name="ficha"/>
+</hibernate-reverse-engineering>

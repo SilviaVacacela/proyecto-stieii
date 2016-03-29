@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../templates/templateEntrenarFichas.xhtml">
+            <ui:define name="content">
+
+                <h1 style="font-size: 16px; font-weight: bold; color: #ffffff; text-shadow: 0px 0px 1px;  text-align: center;">
+                    Aprendizaje mediante Fichas</h1> 
+                <!--inicializamos el metodo crearfichasPreguntas-->
+                <h:form>
+                    <p:outputLabel value="Haga clic en la imagen para escuchar su pronuciación"  
+                                   style="background: #ece3a5;padding: 15px; margin: 10px 55px 0px 0px; float: left;
+                                   position: absolute; left: 30px; top: 250px; width: 170px"  /> 
+                    <p:outputLabel value="Presione la flecha para ver siguiente imagen"  
+                                   style="background: #ece3a5;padding: 15px; margin: 10px 55px 0px 0px; float: left;
+                                   position: absolute; left: 30px; top: 320px; width: 170px"  /> 
+                </h:form>
+
+                <p:panel>
+                    <p:carousel  id="frmEnsenanzaFicha" numVisible="1" itemStyle="width: 600px; height: 380px;" 
+                                 effect="easeInStrong"  >  
+                        <p:tab title="IMAGEN 1">
+                            <p:graphicImage   id="graficoT1"  onclick="hablarF1()" width="590" height="380" title="Presione la flecha para ver siguiente imagen" 
+                                              value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansRFichaPregunta3.idFicha1()}.jpg"/>
+                        </p:tab>
+
+                        <p:tab title="IMAGEN 2">
+                            <p:graphicImage   id="graficoT2" onclick="hablarF2()"  width="590" height="380" title="Presione la flecha para ver siguiente imagen" 
+                                              value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansRFichaPregunta3.idFicha2()}.jpg" />
+                        </p:tab>
+                        <p:tab title="IMAGEN 3">
+                            <p:graphicImage   id="graficoT3" onclick="hablarF3()" width="590" height="380" title="Presione la flecha para ver siguiente imagen" 
+                                              value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansRFichaPregunta3.idFicha3()}.jpg" />
+                        </p:tab>
+                        <p:tab title="IMAGEN 4">
+                            <p:graphicImage   id="graficoT4" onclick="hablarF4()"  width="590" height="380" title="Presione la flecha para ver siguiente imagen" 
+                                              value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansRFichaPregunta3.idFicha4()}.jpg" />
+                        </p:tab>
+                        <p:tab title="IMAGEN 5">
+                            <form>
+                                <commandLink  onclick="document.formulario3.enviar3.disabled = false;
+                                        document.getElementById('btnIniciarP3').style.borderColor = 'violet';" >
+                                    <p:graphicImage   id="graficoT5" onclick="hablarF5()"  width="590" height="380" title="Haga clic en la imagen para INICIAR PPREGUNTA"
+                                                      value="#{FacesContext.getCurrentInstance()}/resources/imagen/imgFichas/#{beansRFichaPregunta3.idFicha5()}.jpg" />
+                                </commandLink>
+                            </form>
+                        </p:tab>
+
+                    </p:carousel>
+                </p:panel>
+
+                <h:form id="form1">
+                    <input id="sonidoF1" value=" #{beansRFichaPregunta3.nameFicha1()}" disabled='true' type="hidden" 
+                           style="position: absolute; right: 50px; top: 150px;"></input>
+                    <input id="sonidoF2" value=" #{beansRFichaPregunta3.nameFicha2()}" disabled='true' type="hidden" 
+                           style="position: absolute; right: 50px; top: 160px;"></input>
+                    <input id="sonidoF3" value=" #{beansRFichaPregunta3.nameFicha3()}" disabled='true' type="hidden" 
+                           style="position: absolute; right: 50px; top: 170px;"></input> 
+                    <input id="sonidoF4" value=" #{beansRFichaPregunta3.nameFicha4()}" disabled='true' type="hidden" 
+                           style="position: absolute; right: 50px; top: 170px;"></input> 
+                    <input id="sonidoF5" value=" #{beansRFichaPregunta3.nameFicha5()}" disabled='true' type="hidden" 
+                           style="position: absolute; right: 50px; top: 170px;"></input> 
+                </h:form>
+
+                <!--h:form>
+                    <h:commandButton id="btnTs" value="INICIAR PREGUNTA" action="testPreguntaEntrenar3" 
+                                     style="padding: 15px; margin: 10px 55px 0px 0px; float: right;
+                                     position: absolute;
+                                     right: 100px;
+                                     top: 150px;" /> 
+                </h:form-->
+                
+                <form name="formulario3" action="testPreguntaEntrenar3.xhtml" >
+                    <input id='btnIniciarP3' type="submit" name="enviar3" value="INICIAR PREGUNTA" disabled="false"  title="Haga clic"
+                           onmouseover="javascript: void(document.getElementById('btnIniciarP3').style.fontSize = '1.8em');
+                                   document.getElementById('btnIniciarP3').style.borderColor = 'green';
+                                   document.getElementById('btnIniciarP3').style.color = 'green';"
+                           onmouseout="javascript: void(document.getElementById('btnIniciarP3').style.fontSize = '1.7em');
+                                   document.getElementById('btnIniciarP3').style.borderColor = 'violet';
+                                   document.getElementById('btnIniciarP3').style.color = 'violet';"
+                           style="background: azure; border: 2px #a8a8a8 solid;padding: 15px; margin: 10px 55px 0px 0px; 
+                           float: right; font-size: 20px; font-weight : bold;
+                           position: absolute; right: 50px; top: 200px;" >
+
+                    </input>
+                </form>
+
+                <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+                <script language="javascript">
+                                function hablarF1() {
+                                    var elemento = document.getElementById("sonidoF1");
+                                    var frase = elemento.value;
+                                    responsiveVoice.speak(frase, "US English Female");
+                                }
+                                function hablarF2() {
+                                    var elemento = document.getElementById("sonidoF2");
+                                    var frase = elemento.value;
+                                    responsiveVoice.speak(frase, "US English Female");
+                                }
+                                function hablarF3() {
+                                    var elemento = document.getElementById("sonidoF3");
+                                    var frase = elemento.value;
+                                    responsiveVoice.speak(frase, "US English Female");
+                                }
+                                function hablarF4() {
+                                    var elemento = document.getElementById("sonidoF4");
+                                    var frase = elemento.value;
+                                    responsiveVoice.speak(frase, "US English Female");
+                                }
+                                function hablarF5() {
+                                    var elemento = document.getElementById("sonidoF5");
+                                    var frase = elemento.value;
+                                    responsiveVoice.speak(frase, "US English Female");
+                                }
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

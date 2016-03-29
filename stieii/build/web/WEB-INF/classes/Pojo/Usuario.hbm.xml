@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Usuario" table="usuario" catalog="stieiibd" optimistic-lock="version">
+        <id name="idUsuario" type="int">
+            <column name="idUsuario" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="rol" class="Pojo.Rol" fetch="select">
+            <column name="rolUsuario" length="20" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="30" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" length="30" not-null="true" />
+        </property>
+        <property name="fechaNacimiento" type="date">
+            <column name="fechaNacimiento" length="10" not-null="true" />
+        </property>
+        <property name="genero" type="boolean">
+            <column name="genero" not-null="true" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" length="25" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="200" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="estudiantes" table="estudiante" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usuarioEst" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Estudiante" />
+        </set>
+        <set name="administradors" table="administrador" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usuarioAdmin" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Administrador" />
+        </set>
+    </class>
+</hibernate-mapping>

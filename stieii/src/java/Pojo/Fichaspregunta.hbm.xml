@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Fichaspregunta" table="fichaspregunta" catalog="stieiibd" optimistic-lock="version">
+        <id name="idFichaInt" type="int">
+            <column name="idFichaInt" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="ficha" class="Pojo.Ficha" fetch="select">
+            <column name="ficha" not-null="true" />
+        </many-to-one>
+        <many-to-one name="preguntaentrenar" class="Pojo.Preguntaentrenar" fetch="select">
+            <column name="pregunta" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

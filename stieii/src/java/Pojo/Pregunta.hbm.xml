@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Pregunta" table="pregunta" catalog="stieiibd" optimistic-lock="version">
+        <id name="idPregunta" type="int">
+            <column name="idPregunta" />
+            <generator class="assigned" />
+        </id>
+        <property name="enunciado" type="string">
+            <column name="enunciado" length="250" not-null="true" />
+        </property>
+        <property name="dificultad" type="double">
+            <column name="dificultad" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="fdescuido" type="double">
+            <column name="fDescuido" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="indiceDis" type="double">
+            <column name="indiceDis" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="nombrePreg" type="string">
+            <column name="nombrePreg" length="11" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="pregConcs" table="preg_conc" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pregunta" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.PregConc" />
+        </set>
+        <set name="items" table="item" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="preguntaItem" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Item" />
+        </set>
+    </class>
+</hibernate-mapping>

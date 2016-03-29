@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/stieiibd?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">admin</property>
+    <property name="hibernate.connection.password">admin123</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.format_sql">true</property>
+    <!--<property name="hibernate.hbm2ddl.auto">validate</property>-->
+    <mapping resource="Pojo/Estudiante.hbm.xml"/>
+    <mapping resource="Pojo/Item.hbm.xml"/>
+    <mapping resource="Pojo/Rol.hbm.xml"/>
+    <mapping resource="Pojo/Administrador.hbm.xml"/>
+    <mapping resource="Pojo/Entrenamiento.hbm.xml"/>
+    <mapping resource="Pojo/Resultado.hbm.xml"/>
+    <mapping resource="Pojo/PregConc.hbm.xml"/>
+    <mapping resource="Pojo/Tema.hbm.xml"/>
+    <mapping resource="Pojo/Concepto.hbm.xml"/>
+    <mapping resource="Pojo/Unidadensenianza.hbm.xml"/>
+    <mapping resource="Pojo/Usuario.hbm.xml"/>
+    <mapping resource="Pojo/Ficha.hbm.xml"/>
+    <mapping resource="Pojo/Pregunta.hbm.xml"/>
+    <mapping resource="Pojo/Preguntaentrenar.hbm.xml"/>
+    <mapping resource="Pojo/Fichaspregunta.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

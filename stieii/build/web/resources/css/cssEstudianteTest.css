@@ -1,0 +1,281 @@
+
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;    
+}
+
+#bottom {
+    position: relative;
+    background-color: #d4e4ef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    text-shadow: 0.3px 0.3px 0px #036fab;
+    text-align: center;
+}
+
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    /*box-shadow: 0px 0px 2px black;*/
+    background-image: url("http://localhost:8080/stieii/faces/resources/imagen/school/fondo.png");
+    padding: 5px;
+}
+
+.left_content {
+    background-image: url("http://localhost:8080/stieii/faces/resources/imagen/school/fondo.png");
+    padding: 5px;
+    margin-left: 170px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+    color: #036fab;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+#sesionUsuarioEst{
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #ffffff;
+
+}
+
+frmMenuPrincipalEstudiante\3a j_idt14.ui-commandlink.ui-widget:link, frmMenuPrincipalEstudiante\3a j_idt14.ui-commandlink.ui-widget:visited{
+    color: lightcoral;
+    text-decoration: underline;
+    text-shadow: 0.5px 0.5px 0px #000000
+}
+frmMenuPrincipalEstudiante\3a j_idt14.ui-commandlink.ui-widget:link:hover, frmMenuPrincipalEstudiante\3a j_idt14.ui-commandlink.ui-widget:visited:hover  {
+    color: #ffffff;
+    text-shadow: 0.5px 0.5px 0px #000000
+}
+#frmEnsenanzaFicha{
+    margin-left: 20%;
+    margin-right: 20%;
+    background: #eee;
+    margin-top: 1%;  /*margen superior*/
+    margin-bottom: 1%; /*margen inferior*/
+    border: 3px #036fab solid;
+    padding: 5px; 
+    position: inherit;
+}
+#frmEnsenanzaFichaT1{
+    margin-left: 20%;
+    margin-right: 20%;
+    background: #eee;
+    margin-top: 1%;  /*margen superior*/
+    margin-bottom: 1%; /*margen inferior*/
+    border: 3px #036fab solid;
+    padding: 5px; 
+    position: inherit;
+}
+
+#resultadoEnt{
+    margin-left: 20%;
+    margin-right: 20%;
+    background: #eee;
+    margin-top: 1%;  /*margen superior*/
+    margin-bottom: 1%; /*margen inferior*/
+    border: 3px #036fab solid;
+    padding: 5px; 
+    position: inherit;
+}
+#resultadoPregEnt{
+    right:  2%;
+    left: 60%;
+    background: #eee;   
+    top: 5%;  /*margen superior*/
+    margin-bottom: 2%; /*margen inferior*/
+    border: 3px #036fab solid;
+    padding: 5px; 
+    position: absolute;
+
+}
+#btnSiguienteEntrenar{
+    position: fixed;
+    right: 30%;
+    top: 50%;
+}
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  18px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #036fab;
+}
+.ui-widget-header{
+    border: none;
+    text-align: center;
+    background: transparent;
+    background: #c4c4c4 -moz-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+    color: #333;
+    font-weight: bold;
+    text-shadow: 0px 1px 0px rgba(255,255,255,0.7);
+}
+#frmMostrarTest\3a gridItemsPregunta_content{
+    border: none;
+    background: transparent;
+    color: #4f4f4f;
+}
+
+.gridItemsPregunta.ui-widget{
+    border:none;
+    background: transparent;
+    color:#4f4f4f;
+    margin-left: 30px;
+    margin-right: 50px;
+}
+
+.ui-growl {
+    top: 45%;
+    left: 45%;
+}
+
+#dockEstudiante{
+    background-color: #ffffff;
+}
+
+#left{
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 200px;
+}
+
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 220px;
+    min-height: 292px; 
+}
+
+.ui-dock-container-top{
+    position: relative;
+    height: 128px;
+    text-align: center;
+}
+
+.imgItem{
+    position: inherit;
+    padding-left: 0px;
+}
+
+.panelStyle{
+    width: 80px;
+    height: 100px;
+    border:none;
+    background: #ffffff;
+}
+
+
+.ui-widget-content {
+    border: 1px solid transparent;
+    background: transparent;
+    color: #4f4f4f;
+}
+
+.ui-widget {
+    font-family: Arial,sans-serif;
+    font-size: 1.1em;
+}
+
+.ui-panel {
+    padding: 0;
+}
+
+.ui-panel .ui-panel-content {
+    border: 0;
+    background: none;
+    padding: 0.2em 0.2em;
+}
+.ui-panel .ui-panel-footer {
+    border-width: 1px 0 0;
+    margin: -8px 0 0 !important;
+    padding: 0em 1em !important;
+    text-align: center !important;
+    color: #036fab;
+    font-weight : bold;
+
+}
+
+
+#dockTest{
+    background: transparent;
+}
+#dockEntrenar{
+    background: transparent;
+}
+
+.imagen1s{ 
+    background: #eee;
+    border:#000000;
+    border-bottom-width: 2px;  
+    margin-bottom:20px;
+    font-size: medium;
+}
+
+.ui-dashboard-column {
+    width:220px;
+    line-stacking: exclude-ruby;
+}
+
+#mostrarCalificacion{
+    position: absolute;
+    float: left;
+    width: 20%;
+    background-color: white;
+    margin-left: 10%;
+    border:2px solid #a8a8a8;
+}
+
+#mostrarGraphUnidad{
+    width: 70%;
+    margin-left: 50%;
+}
+#graphUnidad{
+    width: 60%;
+    float: left;
+    margin-top: -2%;
+}
+#estadistica{
+    width: 100%;
+}
+#mostrarGraphTema{
+    width: 100%;
+    float: left;
+}
+
+#frmMostrarResultados.panelMostrarResultado{
+    width: 100%;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/03/2016 11:00:49 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Administrador" table="administrador" catalog="stieiibd" optimistic-lock="version">
+        <id name="idAdmin" type="int">
+            <column name="idAdmin" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuario" class="Pojo.Usuario" fetch="select">
+            <column name="usuarioAdmin" not-null="true" />
+        </many-to-one>
+        <set name="unidadensenianzas" table="unidadensenianza" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="adminUnidEnsen" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Unidadensenianza" />
+        </set>
+    </class>
+</hibernate-mapping>
