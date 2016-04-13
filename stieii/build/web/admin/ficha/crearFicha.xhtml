@@ -98,7 +98,7 @@
                             <p:outputLabel value="Imagen: " for="uploadImagen2"/>
                             <p:fileUpload id="uploadImagen2" value="#{beanRFicha.imagen}" mode="simple"/>
                             <p:message for="uploadImagen2"/>
-                            <p:graphicImage id="imgAct" width="60" height="60" value="#{FacesContext.getCurrentInstance().getExternalContext()}/resources/imagen/imgFichas/#{beanRFicha.idficha}.jpg" />
+                            <p:graphicImage width="60" height="60" value="#{FacesContext.getCurrentInstance().getExternalContext()}/resources/imagen/imgFichas/#{beanRFicha.idficha}.jpg" cache="false" />
                             <p:outputLabel value="#{beanRFicha.ficha.nombreFicha}.jpg"/>
 
                         </h:panelGrid>
